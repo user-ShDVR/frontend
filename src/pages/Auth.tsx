@@ -4,29 +4,60 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useAppDispatch } from "../app/hooks";
+import { useRegisterUserMutation } from "../services/authApi";
+import { toast } from 'react-toastify';
+import { setUser } from "../features/authSlice";
 
-const initialState = {
-  firstname: "",
-};
 
 const Auth = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+  const navigate = useNavigate();
+  const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   };
+
+  const [isRegisterSuccess, setIsRegisterSuccess] = React.useState(false)
+  const [formValue, setFormValue] = React.useState(initialState)
+  const [registerUser, {data, isSuccess, isError, error}] = useRegisterUserMutation();
+  const {firstName, lastName, email, password} = formValue
+
+  const dispatch = useAppDispatch()
+  const handleChange = (e:any) => {
+    setFormValue({...formValue, [e.target.name]: e.target.value})
+  }
+
+  const handleSubmit =  async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (firstName && lastName && email && password) {
+      await registerUser({firstName, lastName, email, password})
+      setIsRegisterSuccess(true)
+    } else {
+      toast.error("Пожалйста проверьте заполнение полей")
+    }
+
+  };
+  React.useEffect(()=>{
+    if (isRegisterSuccess && isSuccess) {
+      toast.success("Регистрация прошла успешно")
+      dispatch(setUser({name: data.result.name, token: data.token}))
+      navigate('/dashboard')
+    } 
+  },[isRegisterSuccess])
+
+  React.useEffect(()=>{
+   if (isError) {
+    toast.error((error as any).data.message)
+   }
+  },[isError])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -43,9 +74,9 @@ const Auth = () => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+        Регистрация
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" noValidate onChange={handleChange} onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -54,7 +85,7 @@ const Auth = () => {
                 required
                 fullWidth
                 id="firstName"
-                label="First Name"
+                label="Имя"
                 autoFocus
               />
             </Grid>
@@ -63,7 +94,7 @@ const Auth = () => {
                 required
                 fullWidth
                 id="lastName"
-                label="Last Name"
+                label="Фамилия"
                 name="lastName"
                 autoComplete="family-name"
               />
@@ -73,7 +104,7 @@ const Auth = () => {
                 required
                 fullWidth
                 id="email"
-                label="Email Address"
+                label="Е-мейл"
                 name="email"
                 autoComplete="email"
               />
@@ -83,14 +114,13 @@ const Auth = () => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Пароль"
                 type="password"
                 id="password"
                 autoComplete="new-password"
               />
             </Grid>
-            <Grid item xs={12}>
-            </Grid>
+            <Grid item xs={12}></Grid>
           </Grid>
           <Button
             type="submit"
@@ -98,13 +128,11 @@ const Auth = () => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Зарегистрироваться
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link to={'/login'} >
-                Already have an account? Sign in
-              </Link>
+              <Link to={"/signin"}>Уже есть аккаунт? Войти</Link>
             </Grid>
           </Grid>
         </Box>

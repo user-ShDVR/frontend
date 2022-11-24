@@ -9,6 +9,11 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
+import SignIn from './pages/SignIn';
+import { useAppDispatch } from './app/hooks';
+import { setUser } from './features/authSlice';
+import PrivateRoute from './components/PrivateRoute';
+import Header from './components/header';
 
 
 
@@ -25,19 +30,24 @@ function App() {
   const ThemeSwitch = ()=>{
     useUserTheme(!userTheme)
   }
+  const dispatch = useAppDispatch()
+  const user = JSON.parse(localStorage.getItem('user') || "{}")
+  React.useEffect(() => {
+    dispatch(setUser(user))
+  },[])
   return (
     <div className="App">
       <ThemeProvider theme={theme}>
+      <ToastContainer/>
+      <Header themeCallbak={ThemeSwitch} theme={theme}/>
       <h2>
-      <IconButton  onClick={ThemeSwitch} color="inherit">
-      Auth
-        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+
       </h2>
       <Routes>
-        <Route path='/' element={<Navigate to='/auth' replace />} />
+        <Route path='/' element={<Navigate to='/signin' replace />} />
+        <Route path='/signin' element={<SignIn />} />
         <Route path='/auth' element={<Auth />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
       </Routes>
       </ThemeProvider>
     </div>

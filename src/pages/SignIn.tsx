@@ -1,30 +1,64 @@
 import React from "react";
+import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
+import { Link } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useLoginUserMutation } from "../services/authApi";
+import { useAppDispatch } from "../app/hooks";
+import { setUser } from "../features/authSlice";
 
 
 const SignIn = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const navigate = useNavigate();
+  const initialState = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+  };
+
+  const [isLoginSuccess, setIsLoginSuccess] = React.useState(false)
+  const [formValue, setFormValue] = React.useState(initialState)
+  const [loginUser, {data, isSuccess, isError, error}] = useLoginUserMutation();
+  const {email, password} = formValue
+
+  const dispatch = useAppDispatch()
+
+  const handleChange = (e:any) => {
+    setFormValue({...formValue, [e.target.name]: e.target.value})
+  }
+
+  const handleSubmit =  async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    if (email && password) {
+      await loginUser({email, password})
+      setIsLoginSuccess(true)
+    } else {
+      toast.error("Пожалйста проверьте заполнение полей")
+    }
 
   };
+  React.useEffect(()=>{
+    if (isLoginSuccess && isSuccess) {
+      toast.success("Авторизация прошла успешно")
+      dispatch(setUser({name: data.result.name, token: data.token}))
+      navigate('/dashboard')
+    }
+  },[isLoginSuccess])
+
+  React.useEffect(()=>{
+    if (isError) {
+     toast.error((error as any).data.message)
+    }
+   },[isError])
 
   return (
       <Container component="main" maxWidth="xs">
@@ -46,6 +80,7 @@ const SignIn = () => {
           <Box
             component="form"
             onSubmit={handleSubmit}
+            onChange={handleChange}
             noValidate
             sx={{ mt: 1 }}
           >
@@ -79,12 +114,12 @@ const SignIn = () => {
             </Button>
             <Grid container justifyContent="space-between">
               <Grid item >
-                <Link href="#" variant="body2">
+                <Link to={'/recovery'} >
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link to={'/auth'} >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
