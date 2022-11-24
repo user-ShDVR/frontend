@@ -1,56 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
 import './App.css';
+import { Routes, Route, Navigate } from "react-router-dom";
+import Auth from './pages/Auth';
+import Dashboard from './pages/Dashboard';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import React from 'react';
+import IconButton from '@mui/material/IconButton';
+
+
+
 
 function App() {
+
+  const [userTheme, useUserTheme] = React.useState<true | false>(true)
+  
+  const theme = createTheme({
+    palette: {
+      mode: userTheme == true? 'light' : 'dark',
+    },
+  });
+  const ThemeSwitch = ()=>{
+    useUserTheme(!userTheme)
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <ThemeProvider theme={theme}>
+      <h2>
+      <IconButton  onClick={ThemeSwitch} color="inherit">
+      Auth
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+      </h2>
+      <Routes>
+        <Route path='/' element={<Navigate to='/auth' replace />} />
+        <Route path='/auth' element={<Auth />} />
+        <Route path='/dashboard' element={<Dashboard />} />
+      </Routes>
+      </ThemeProvider>
     </div>
   );
 }
