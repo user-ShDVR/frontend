@@ -75,7 +75,7 @@ const SignIn = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Вход
           </Typography>
           <Box
             component="form"
@@ -89,7 +89,7 @@ const SignIn = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Е-мейл"
               name="email"
               autoComplete="email"
               autoFocus
@@ -99,7 +99,7 @@ const SignIn = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Пароль"
               type="password"
               id="password"
               autoComplete="current-password"
@@ -110,17 +110,17 @@ const SignIn = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Войти
             </Button>
             <Grid container justifyContent="space-between">
               <Grid item >
                 <Link to={'/recovery'} >
-                  Forgot password?
+                  Забыли пароль?
                 </Link>
               </Grid>
               <Grid item>
                 <Link to={'/auth'} >
-                  {"Don't have an account? Sign Up"}
+                  {"Нету аккаунта? Зарегистрируйтесь"}
                 </Link>
               </Grid>
             </Grid>

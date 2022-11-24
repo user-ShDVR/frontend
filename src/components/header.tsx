@@ -64,7 +64,7 @@ function Header({ themeCallbak, theme }: any) {
               textDecoration: "none",
             }}
           >
-            СурГу
+            СурГУ
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -120,7 +120,7 @@ function Header({ themeCallbak, theme }: any) {
               textDecoration: "none",
             }}
           >
-            СурГу
+            СурГУ
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             { token ? pages.map((page) => (
