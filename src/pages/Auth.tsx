@@ -13,10 +13,12 @@ import Container from "@mui/material/Container";
 import { useAppDispatch } from "../app/hooks";
 import { useRegisterUserMutation } from "../services/authApi";
 import { toast } from 'react-toastify';
-import { setUser } from "../features/authSlice";
+import { selectAuth, setUser } from "../features/authSlice";
+import { useSelector } from "react-redux";
 
 
 const Auth = () => {
+  const {token} = useSelector(selectAuth)
   const navigate = useNavigate();
   const initialState = {
     firstName: "",
@@ -46,6 +48,9 @@ const Auth = () => {
 
   };
   React.useEffect(()=>{
+    if (token){
+      navigate('/main')
+    }
     if (isRegisterSuccess && isSuccess) {
       toast.success("Регистрация прошла успешно")
       dispatch(setUser({name: data.result.name, token: data.token}))
@@ -60,7 +65,7 @@ const Auth = () => {
   },[isError])
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container sx={{ py: 12 }} component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
@@ -70,7 +75,7 @@ const Auth = () => {
           alignItems: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+        <Avatar sx={{ m: 1, bgcolor: "#90caf9" }}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
@@ -82,7 +87,6 @@ const Auth = () => {
               <TextField
                 autoComplete="given-name"
                 name="firstName"
-                required
                 fullWidth
                 id="firstName"
                 label="Имя"
@@ -91,7 +95,6 @@ const Auth = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                required
                 fullWidth
                 id="lastName"
                 label="Фамилия"
@@ -101,7 +104,6 @@ const Auth = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 id="email"
                 label="Е-мейл"
@@ -111,7 +113,6 @@ const Auth = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                required
                 fullWidth
                 name="password"
                 label="Пароль"

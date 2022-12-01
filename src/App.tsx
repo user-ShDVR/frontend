@@ -14,6 +14,7 @@ import { useAppDispatch } from './app/hooks';
 import { setUser } from './features/authSlice';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/header';
+import Main from './pages/Main';
 
 
 
@@ -40,14 +41,12 @@ function App() {
       <ThemeProvider theme={theme}>
       <ToastContainer/>
       <Header themeCallbak={ThemeSwitch} theme={theme}/>
-      <h2>
-
-      </h2>
       <Routes>
         <Route path='/' element={<Navigate to='/signin' replace />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/auth' element={<Auth />} />
         <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path='/main' element={<PrivateRoute><Main /></PrivateRoute>} />
       </Routes>
       </ThemeProvider>
     </div>
@@ -55,3 +54,15 @@ function App() {
 }
 
 export default App;
+// Запрос с бэкенда через await 
+// полученный массив перебираем циклом foreach/map
+//  
+//
+//
+//
+//
+//
+//
+//
+//
+//

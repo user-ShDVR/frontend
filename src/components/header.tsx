@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 import { selectAuth } from "../features/authSlice";
 
 const pages = ["Главная", "Мероприятия", "Ярмарка студентов"];
-const settings = ["Профиль", "Настройки", "Выйти"];
+const settings = ["Профиль", "Выйти"];
 
 function Header({ themeCallbak, theme }: any) {
     const {token} = useSelector(selectAuth)
@@ -46,7 +46,7 @@ function Header({ themeCallbak, theme }: any) {
   };
 
   return ( 
-    <AppBar position="static">
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
@@ -110,7 +110,7 @@ function Header({ themeCallbak, theme }: any) {
             component="a"
             href=""
             sx={{
-              mr: 2,
+              
               display: { xs: "flex", md: "none" },
               flexGrow: 1,
               fontFamily: "monospace",

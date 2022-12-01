@@ -13,10 +13,12 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useLoginUserMutation } from "../services/authApi";
 import { useAppDispatch } from "../app/hooks";
-import { setUser } from "../features/authSlice";
+import { selectAuth, setUser } from "../features/authSlice";
+import { useSelector } from "react-redux";
 
 
 const SignIn = () => {
+  const {token} = useSelector(selectAuth)
   const navigate = useNavigate();
   const initialState = {
     firstName: "",
@@ -47,6 +49,9 @@ const SignIn = () => {
 
   };
   React.useEffect(()=>{
+    if (token){
+      navigate('/main')
+    }
     if (isLoginSuccess && isSuccess) {
       toast.success("Авторизация прошла успешно")
       dispatch(setUser({name: data.result.name, token: data.token}))
@@ -61,7 +66,7 @@ const SignIn = () => {
    },[isError])
 
   return (
-      <Container component="main" maxWidth="xs">
+      <Container sx={{ py: 12 }} component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -86,7 +91,7 @@ const SignIn = () => {
           >
             <TextField
               margin="normal"
-              required
+              
               fullWidth
               id="email"
               label="Е-мейл"
@@ -96,7 +101,7 @@ const SignIn = () => {
             />
             <TextField
               margin="normal"
-              required
+              
               fullWidth
               name="password"
               label="Пароль"
@@ -108,7 +113,7 @@ const SignIn = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              sx={{ mt: 3, mb: 3}}
             >
               Войти
             </Button>

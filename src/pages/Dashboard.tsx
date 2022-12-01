@@ -19,7 +19,7 @@ const Dashboard = () => {
     navigate('/signin')
   }
   return (
-    <Container component="main" maxWidth="xs">
+    <Container sx={{ py: 12 }} component="main" maxWidth="xs">
       <CssBaseline />
       <Box
         sx={{
