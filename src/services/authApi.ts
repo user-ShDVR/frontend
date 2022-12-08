@@ -10,7 +10,6 @@ export const authApi = createApi({
             query: (body: {email: string; password: string;})=>{
                 return{
                     url: "/users/signin",
-                    mode: 'no-cors',
                     method: "post",
                     body,
                 }
@@ -20,7 +19,6 @@ export const authApi = createApi({
             query: (body: {firstName: string; lastName: string; email: string; password: string;})=>{
                 return{
                     url: "/users/signup",
-                    mode: 'no-cors',
                     method: "post",
                     body,
                 }
