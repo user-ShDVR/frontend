@@ -1,6 +1,6 @@
 import './App.css';
 import { Routes, Route, Navigate } from "react-router-dom";
-// import Auth from './pages/Auth';
+import Auth from './pages/Auth';
 import Dashboard from './pages/Dashboard';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,7 +15,6 @@ import { setUser } from './features/authSlice';
 import PrivateRoute from './components/PrivateRoute';
 import Header from './components/header';
 import Main from './pages/Main';
-import AdminPanel from './pages/AdminPanel';
 
 
 
@@ -43,12 +42,11 @@ function App() {
       <ToastContainer/>
       <Header themeCallbak={ThemeSwitch} theme={theme}/>
       <Routes>
-        <Route path='/' element={<Navigate to='/main' replace />} />
-        {/* <Route path='/signin' element={<SignIn />} /> */}
-        {/* <Route path='/auth' element={<Auth />} /> */}
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/admin' element={<AdminPanel />} />
-        <Route path='/main' element={<Main />} />{/*fix PrivateRoute */}
+        <Route path='/' element={<Navigate to='/signin' replace />} />
+        <Route path='/signin' element={<SignIn />} />
+        <Route path='/auth' element={<Auth />} />
+        <Route path='/dashboard' element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        <Route path='/main' element={<PrivateRoute><Main /></PrivateRoute>} />
       </Routes>
       </ThemeProvider>
     </div>

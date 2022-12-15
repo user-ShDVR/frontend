@@ -17,7 +17,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useSelector } from "react-redux";
 import { selectAuth } from "../features/authSlice";
 
-const pages = ["Главная"];
+const pages = ["Главная", "Мероприятия", "Ярмарка студентов"];
 const settings = ["Профиль", "Выйти"];
 
 function Header({ themeCallbak, theme }: any) {
@@ -64,11 +64,11 @@ function Header({ themeCallbak, theme }: any) {
               textDecoration: "none",
             }}
           >
-            «Газпромнефть-Хантос»
+            СурГУ
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-            { !token ? <IconButton
+            { token ? <IconButton
               size="large"
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -120,10 +120,10 @@ function Header({ themeCallbak, theme }: any) {
               textDecoration: "none",
             }}
           >
-            «Газпромнефть-Хантос»
+            СурГУ
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            { !token ? pages.map((page) => (
+            { token ? pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -142,7 +142,7 @@ function Header({ themeCallbak, theme }: any) {
                 <Brightness4Icon />
               )}
             </IconButton>
-           { !token ? <Tooltip title="Open settings">
+           { token ? <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <PermIdentityIcon />
               </IconButton>

@@ -65,81 +65,80 @@ const Auth = () => {
   },[isError])
 
   return (
-    // <Container sx={{ py: 12 }} component="main" maxWidth="xs">
-    //   <CssBaseline />
-    //   <Box
-    //       sx={{
-    //         marginTop: 8,
-    //         display: 'flex',
-    //         flexDirection: 'column',
-    //         alignItems: 'center',
-    //       }}
-    //     >
-    //     <Avatar sx={{ m: 1, bgcolor: "#90caf9" }}>
-    //       <LockOutlinedIcon />
-    //     </Avatar>
-    //     <Typography component="h1" variant="h5">
-    //     Регистрация
-    //     </Typography>
-    //     <Box component="form" noValidate onChange={handleChange} onSubmit={handleSubmit} sx={{ mt: 3 }}>
-    //       <Grid container spacing={2}>
-    //         <Grid item xs={12} sm={6}>
-    //           <TextField
-    //             autoComplete="given-name"
-    //             name="firstName"
-    //             fullWidth
-    //             id="firstName"
-    //             label="Имя"
-    //             autoFocus
-    //           />
-    //         </Grid>
-    //         <Grid item xs={12} sm={6}>
-    //           <TextField
-    //             fullWidth
-    //             id="lastName"
-    //             label="Фамилия"
-    //             name="lastName"
-    //             autoComplete="family-name"
-    //           />
-    //         </Grid>
-    //         <Grid item xs={12}>
-    //           <TextField
-    //             fullWidth
-    //             id="email"
-    //             label="Е-мейл"
-    //             name="email"
-    //             autoComplete="email"
-    //           />
-    //         </Grid>
-    //         <Grid item xs={12}>
-    //           <TextField
-    //             fullWidth
-    //             name="password"
-    //             label="Пароль"
-    //             type="password"
-    //             id="password"
-    //             autoComplete="new-password"
-    //           />
-    //         </Grid>
-    //         <Grid item xs={12}></Grid>
-    //       </Grid>
-    //       <Button
-    //         type="submit"
-    //         fullWidth
-    //         variant="contained"
-    //         sx={{ mt: 3, mb: 2 }}
-    //       >
-    //         Зарегистрироваться
-    //       </Button>
-    //       <Grid container justifyContent="flex-end">
-    //         <Grid item>
-    //           <Link to={"/signin"}>Уже есть аккаунт? Войти</Link>
-    //         </Grid>
-    //       </Grid>
-    //     </Box>
-    //   </Box>
-    // </Container>
-    132
+    <Container sx={{ py: 12 }} component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "#90caf9" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+        Регистрация
+        </Typography>
+        <Box component="form" noValidate onChange={handleChange} onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="given-name"
+                name="firstName"
+                fullWidth
+                id="firstName"
+                label="Имя"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                id="lastName"
+                label="Фамилия"
+                name="lastName"
+                autoComplete="family-name"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                id="email"
+                label="Е-мейл"
+                name="email"
+                autoComplete="email"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                name="password"
+                label="Пароль"
+                type="password"
+                id="password"
+                autoComplete="new-password"
+              />
+            </Grid>
+            <Grid item xs={12}></Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Зарегистрироваться
+          </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link to={"/signin"}>Уже есть аккаунт? Войти</Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
+    </Container>
   );
 };
 
